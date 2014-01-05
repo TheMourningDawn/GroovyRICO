@@ -57,20 +57,23 @@ class TestCalculateSubsets {
 		int maxSubsetSize = 1
 		testCalcSub = new CalculateSubsets(setSize, maxSubsetSize)
 		
-		//Call next for setSize times
-		for(int i=0;i<2.power(setSize);i++){
+		while(testCalcSub.hasNext() == true){
 			testCalcSub.next()
 		}
-		//The next call to next should return a null, yo
-		assertEquals(null,testCalcSub.next())
+		
+		//Call next for setSize times
+		for(int i=0;i<setSize;i++){
+			testCalcSub.next()
+		}
+		//The next call to hasNext should return a null, yo
+		assertEquals(false,testCalcSub.hasNext())
 	}
 	
 	@Test
 	public void testWhenTheNumbersAreTooDamnHigh(){
-		testCalcSub = new CalculateSubsets(100000000,5)
-		while (testCalcSub.next() != null){
-			//Do nothing
-			//This seems kinda dumb, but whatever
+		testCalcSub = new CalculateSubsets(30,5)
+		while (testCalcSub.hasNext()){
+			testCalcSub.next()
 		}
 	}
 	
@@ -78,6 +81,7 @@ class TestCalculateSubsets {
 	public void testIfBigIntegerIsReallyThatBig() {
 		BigInteger thisIsLarge = 2.power(70)
 		assertEquals(2.power(70),thisIsLarge)
+		//Haha, this is a silly test...
 	}
 
 }

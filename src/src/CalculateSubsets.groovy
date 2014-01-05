@@ -6,7 +6,6 @@ class CalculateSubsets {
 	BigInteger iteration
 	
 	String format
-//	List mask
 
 	public CalculateSubsets(int mySetSize, int maxSubset) {
 		maxSubsetSize = maxSubset
@@ -15,20 +14,28 @@ class CalculateSubsets {
 		format = "%" + setSize + "s"
 	}
 	
+	boolean hasNext(){
+		int nextIteration = iteration + 1
+		if(nextIteration > 2.power(setSize))
+			return false
+		return true
+	}
+	
 	List next(){
 		List mask = new ArrayList()
 		iteration++
-		println iteration
-		if(iteration > 2.power(setSize))
-			return null
-		String maskAsString = Integer.toBinaryString(iteration)//String.format(format, Integer.toBinaryString(iteration)).replace(' ','0')
-		if(maskAsString.count("1") > maxSubsetSize){
-			return next()
+		String maskAsString = ""
+		while((maskAsString = Integer.toBinaryString(iteration)).count("1") > maxSubsetSize){
+			iteration++
+			println iteration
 		}
-		for(int i=0;i<maskAsString.size();i++){
-			mask.add(maskAsString.substring(i,i+1).toInteger())
+		if(this.hasNext()){
+			maskAsString = String.format(format, Integer.toBinaryString(iteration)).replace(' ','0')
+			for(int i=0;i<maskAsString.size();i++){
+				mask.add(maskAsString.substring(i,i+1).toInteger())
+			}
+//			println mask
 		}
-		println mask
 		return mask
 	}
 
